@@ -1,0 +1,50 @@
+*.aps
+*.user
+*.suo
+Debug
+DebugStatic
+Release
+ReleaseStatic
+Analysis
+*.bak
+Thumbs.db
+CVS
+*.cd
+*.log
+*.opt
+*.ncb
+*.plg
+*.WW
+/LYAP
+/Rel_OB
+/Doc/OB Writer (Midea) 简易说明手册(2014-9-5).doc
+/Doc/美的量产机台接线设定说明.pdf
+/Doc/MSM9184 更新 DFU 代码步骤说明.pdf
+/Doc/OB Writer (Midea) 简易说明手册-2014-12-15.pdf
+/Doc/OB Writer (Midea) 简易说明手册-2015-01-15.pdf
+/Doc/OB Writer (Midea) 简易说明手册-2015-02-09.pdf
+/Doc/OB Writer (Midea) 简易说明手册-2015-03-17.pdf
+/Doc/OBAPSE 专案生成软件与MideaID密技.pdf
+/Doc/SMAP 手动切换一般版与ID版的方式.pdf
+/Doc/如何将设定与刻录文件输出成可执行文件(2014-10-17).pdf
+/Doc/如何将设定与刻录文件输出成可执行文件(2014-11-13).pdf
+/Doc/User Manual20100408
+/Doc/MideaPkg Fig03.png
+/Doc/MSM9184 DFU.jpg
+/Doc/MideaPkg Fig01.png
+/Doc/MideaPkg Fig02.png
+/Doc/OBAPSE Fig9.png
+/Doc/MSM9184L.png
+/Doc/OBAPSE Fig1.PNG
+/Doc/OBAPSE Fig2.PNG
+/Doc/OBAPSE Fig3.PNG
+/Doc/OBAPSE Fig4.PNG
+/Doc/OBAPSE Fig5.PNG
+/Doc/OBAPSE Fig6.PNG
+/Doc/OBAPSE Fig7.png
+/Doc/OBAPSE Fig8.png
+/Doc/OBAPSE Fig12.png
+/Doc/OBAPSE Fig10.png
+/Doc/OBAPSE Fig11.png
+*.sdf
+*.opensdf
