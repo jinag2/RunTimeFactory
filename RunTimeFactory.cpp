@@ -16,15 +16,7 @@ CRunTimeClsFactories& CRunTimeClsFactories::GetInstance()
 	return *m_spInstance;
 }
 
-CRunTimeClsFactories::CRunTimeClsFactories()
-{
-}
-
-CRunTimeClsFactories::~CRunTimeClsFactories()
-{
-}
-
-bool CRunTimeClsFactories::RegisterFactory(const string& strClsName, IRunTimeCreateFactory* pFactory)
+bool CRunTimeClsFactories::_RegisterFactory(const string& strClsName, IRunTimeCreateFactory* pFactory)
 {
 	assert(pFactory);
 
@@ -40,9 +32,15 @@ bool CRunTimeClsFactories::RegisterFactory(const string& strClsName, IRunTimeCre
 	}
 }
 
-IRunTimeObj* CRunTimeClsFactories::CreateInstance(const string& strClsName)
+IRunTimeObj* CRunTimeClsFactories::CreateInstance(const char* szClsName)
 {
-	IRunTimeCreateFactory* pFactory = m_colFactories[strClsName];
+	if (szClsName == nullptr)
+	{
+		assert(false);
+		return nullptr;
+	}
+
+	IRunTimeCreateFactory* pFactory = m_colFactories[string(szClsName)];
 	if (pFactory)
 	{
 		return pFactory->Create();

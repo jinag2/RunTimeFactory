@@ -12,6 +12,7 @@ using namespace std;
 class IRunTimeObj
 {
 public:
+	virtual ~IRunTimeObj() {}
 	virtual const string& GetClsName() = 0;
 };
 
@@ -23,6 +24,7 @@ public:
 class IRunTimeCreateFactory
 {
 public:
+	virtual ~IRunTimeCreateFactory() {}
 	virtual IRunTimeObj* Create() = 0;
 };
 
@@ -38,10 +40,10 @@ public:
 	CRunTimeCreateFactory(const string& strClsName)	{ _Register(strClsName); }
 	virtual ~CRunTimeCreateFactory()	{}
 
-	virtual IRunTimeObj* Create()	{ return (IRunTimeObj*)(new T);}
+	virtual IRunTimeObj* Create()	{ return dynamic_cast<IRunTimeObj*>(new T()); }
 
 protected:
-	void _Register(const string& strClsName)	{ CRunTimeClsFactories::GetInstance().RegisterFactory(strClsName, this); }
+	void _Register(const string& strClsName)	{ CRunTimeClsFactories::GetInstance()._RegisterFactory(strClsName, this); }
 };
 
 
@@ -54,17 +56,17 @@ class CRunTimeClsFactories
 public:
 	static CRunTimeClsFactories& GetInstance();
 
-	~CRunTimeClsFactories();
-
-	bool RegisterFactory(const string& strClsName, IRunTimeCreateFactory* pFactory);
-	IRunTimeObj* CreateInstance(const string& strClsName);
+	IRunTimeObj* CreateInstance(const char* szClsName);
 
 protected:
 	static shared_ptr<CRunTimeClsFactories> m_spInstance;
 
 	map<string, IRunTimeCreateFactory*> m_colFactories;
 
-	CRunTimeClsFactories();
+	CRunTimeClsFactories()	{}
+	bool _RegisterFactory(const string& strClsName, IRunTimeCreateFactory* pFactory);
+
+	template <class T> friend class CRunTimeCreateFactory;
 };
 
 

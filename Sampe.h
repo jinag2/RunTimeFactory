@@ -1,6 +1,11 @@
 #pragma once
 #include "RunTimeFactory.h"
 
+
+////////////////////////////////////////////////////////////////////////////////
+// CBaseSampe
+// 
+
 class CBaseSampe
 {
 public:
@@ -14,6 +19,11 @@ protected:
 	int m_nValue;
 };
 
+
+////////////////////////////////////////////////////////////////////////////////
+// CSampe1
+// 
+
 class CSampe1 : public CBaseSampe, public IRunTimeObj
 {
 public:
@@ -26,6 +36,10 @@ public:
 };
 
 
+////////////////////////////////////////////////////////////////////////////////
+// CSampe2
+// 
+
 class CSampe2 : public CBaseSampe, public IRunTimeObj
 {
 public:
@@ -33,4 +47,16 @@ public:
 	virtual ~CSampe2();
 
 	USE_RUNTIME_OBJ(CSampe2)
+};
+
+
+////////////////////////////////////////////////////////////////////////////////
+// CSampe3
+// 
+
+class CSampe3 : public CBaseSampe
+{
+public:
+	CSampe3();
+	virtual ~CSampe3();
 };
