@@ -1,4 +1,5 @@
-#include "StdAfx.h"
+// RunTimeFactory.cpp
+
 #include <assert.h>
 
 #include "RunTimeFactory.h"
