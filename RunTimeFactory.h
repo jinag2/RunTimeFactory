@@ -12,11 +12,11 @@
   freely, subject to the following restrictions:
 
   1. The origin of this software must not be misrepresented; you must not
-     claim that you wrote the original software. If you use this software
-     in a product, an acknowledgment in the product documentation would be
-     appreciated but is not required.
+	 claim that you wrote the original software. If you use this software
+	 in a product, an acknowledgment in the product documentation would be
+	 appreciated but is not required.
   2. Altered source versions must be plainly marked as such, and must not be
-     misrepresented as being the original software.
+	 misrepresented as being the original software.
   3. This notice may not be removed or altered from any source distribution.
 
   Chao-Hung Chiang       jinag2@gmail.com
@@ -26,6 +26,7 @@
 
 #include <string>
 #include <map>
+#include <assert.h>
 
 using namespace std;
 
@@ -64,7 +65,8 @@ public:
 	CRunTimeCreateFactory(const string& strClsName)	{ _Register(strClsName); }
 	virtual ~CRunTimeCreateFactory()	{}
 
-	virtual IRunTimeObj* Create()	{ return dynamic_cast<IRunTimeObj*>(new T()); }
+	virtual IRunTimeObj* Create()				{ return dynamic_cast<IRunTimeObj*>(new T()); }
+	virtual shared_ptr<T> CreateSharePtr()		{ return make_shared<T>(); }
 
 protected:
 	void _Register(const string& strClsName)	{ CRunTimeClsFactories::GetInstance()._RegisterFactory(strClsName, this); }
@@ -81,6 +83,27 @@ public:
 	static CRunTimeClsFactories& GetInstance();
 
 	IRunTimeObj* CreateInstance(const char* szClsName);
+
+	template <class T>
+	shared_ptr<T> CreateSharePtrInstance(const char* szClsName)
+	{
+		if (szClsName == nullptr)
+		{
+			assert(false);
+			return nullptr;
+		}
+
+		CRunTimeCreateFactory<T>* pFactory = 
+			dynamic_cast<CRunTimeCreateFactory<T>*>(m_colFactories[string(szClsName)]);
+		if (pFactory)
+		{
+			return pFactory->CreateSharePtr();
+		}
+		else
+		{
+			return nullptr;
+		}
+	}
 
 protected:
 	static shared_ptr<CRunTimeClsFactories> m_spInstance;
