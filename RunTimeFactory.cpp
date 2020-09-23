@@ -51,3 +51,22 @@ IRunTimeObj* CRunTimeClsFactories::CreateInstance(const char* szClsName)
 		return nullptr;
 	}
 }
+
+shared_ptr<IRunTimeObj> CRunTimeClsFactories::CreateSharePtrInstance(const char* szClsName)
+{
+	if (szClsName == nullptr)
+	{
+		assert(false);
+		return nullptr;
+	}
+
+	IRunTimeCreateFactory* pFactory = m_colFactories[string(szClsName)];
+	if (pFactory)
+	{
+		return pFactory->CreateSharePtr();
+	}
+	else
+	{
+		return nullptr;
+	}
+}

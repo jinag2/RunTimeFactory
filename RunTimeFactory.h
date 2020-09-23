@@ -26,7 +26,6 @@
 
 #include <string>
 #include <map>
-#include <assert.h>
 
 using namespace std;
 
@@ -51,6 +50,7 @@ class IRunTimeCreateFactory
 public:
 	virtual ~IRunTimeCreateFactory() {}
 	virtual IRunTimeObj* Create() = 0;
+	virtual shared_ptr<IRunTimeObj> CreateSharePtr() = 0;
 };
 
 
@@ -65,8 +65,8 @@ public:
 	CRunTimeCreateFactory(const string& strClsName)	{ _Register(strClsName); }
 	virtual ~CRunTimeCreateFactory()	{}
 
-	virtual IRunTimeObj* Create()				{ return dynamic_cast<IRunTimeObj*>(new T()); }
-	virtual shared_ptr<T> CreateSharePtr()		{ return make_shared<T>(); }
+	virtual IRunTimeObj* Create() override						{ return dynamic_cast<IRunTimeObj*>(new T()); }
+	virtual shared_ptr<IRunTimeObj> CreateSharePtr() override	{ return static_pointer_cast<IRunTimeObj>(make_shared<T>()); }
 
 protected:
 	void _Register(const string& strClsName)	{ CRunTimeClsFactories::GetInstance()._RegisterFactory(strClsName, this); }
@@ -83,27 +83,7 @@ public:
 	static CRunTimeClsFactories& GetInstance();
 
 	IRunTimeObj* CreateInstance(const char* szClsName);
-
-	template <class T>
-	shared_ptr<T> CreateSharePtrInstance(const char* szClsName)
-	{
-		if (szClsName == nullptr)
-		{
-			assert(false);
-			return nullptr;
-		}
-
-		CRunTimeCreateFactory<T>* pFactory = 
-			dynamic_cast<CRunTimeCreateFactory<T>*>(m_colFactories[string(szClsName)]);
-		if (pFactory)
-		{
-			return pFactory->CreateSharePtr();
-		}
-		else
-		{
-			return nullptr;
-		}
-	}
+	shared_ptr<IRunTimeObj> CreateSharePtrInstance(const char* szClsName);
 
 protected:
 	static shared_ptr<CRunTimeClsFactories> m_spInstance;
